@@ -1,3 +1,29 @@
 /* 
     General Styles
 */
+.logo{
+    padding-left: 60px;
+    width: 200px;
+}
+.favorites{
+    margin-right: 60px;
+}
+.h2{
+    color: rgb(184, 37, 37);
+}
+.card-row{
+    margin-top: 50px;
+}
+.card-name{
+    text-align: center;
+    margin-top:20px;
+}
+.card-description{
+    text-align: center;
+    line-height: 1.8;
+    font-weight:450;
+}
+.card-mini-cols{
+    text-align: center;
+    color:rgb(233, 16, 16);
+}

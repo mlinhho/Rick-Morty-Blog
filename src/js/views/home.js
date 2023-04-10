@@ -1,35 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../../styles/home.css";
 import { CharacterCard } from "../component/CharacterCard";
+import { LocationCard } from "../component/LocationCard";
+import { EpisodeCard } from "../component/EpisodeCard";
+import { Context } from "../store/appContext";
 
 export const Home = () => {
-	const [characters, setCharacters] = useState([]);
-	const BASE_API_URL = "https://rickandmortyapi.com/api"
-
-	async function getCharactersFromApi(){
-		try {
-			const response = await fetch(`${BASE_API_URL}/character`);
-			const body = await response.json();
-			if (!response.ok) throw new Error (`${body}`);
-			setCharacters(body.results);
-		} catch (error){
-			console.log(error);
-		} 
-	};
+	const {store,actions} = useContext(Context);
 
 	useEffect(() => {
-		getCharactersFromApi();
-	},[])
+		actions.getCharactersFromApi();
+	},[actions])
+
+	useEffect(() => {
+		actions.getLocationsFromApi();
+	},[actions])
+
+	useEffect(() => {
+		actions.getEpisodesFromApi();
+	},[actions])
 	
 	return (
 		<div className="container">
+			
 			<h1 className="100-w text-center">{"Rick & Morty"}</h1>
+
 			<div className="d-flex flex-column">
 				<div className="d-flex">
-					<h2>{"Characters"}</h2>
+					<h2 className="h2">{"Characters"}</h2>
 				</div>
 				<div className="d-flex 100-w overflow-auto">
-					{characters.map((character) => {
+					{store.characters.map((character) => {
 						return (
 							<CharacterCard
 								key={character.id}
@@ -37,6 +38,33 @@ export const Home = () => {
 						)
 					})}
 				</div>
+
+				<div className="d-flex card-row">
+					<h2 className="h2">{"Locations"}</h2>
+				</div>
+				<div className="d-flex 100-w overflow-auto">
+					{store.locations.map((location) => {
+						return (
+							<LocationCard
+								key={location.id}
+								location={location}/>
+						)
+					})}
+				</div>
+
+				<div className="d-flex card-row">
+					<h2 className="h2">{"Episodes"}</h2>
+				</div>
+				<div className="d-flex 100-w overflow-auto">
+					{store.episodes.map((episode) => {
+						return (
+							<EpisodeCard
+								key={episode.id}
+								episode={episode}/>
+						)
+					})}
+				</div>
+
 			</div>
 		</div>
 	);
